@@ -1,41 +1,26 @@
 package ddd.example.snackmachine;
 
 import ddd.common.AbstractEntity;
+import lombok.*;
+
 
 @SuppressWarnings("serial")
+@NoArgsConstructor
+@Getter
 public class Slot extends AbstractEntity<Long> {
 
 	private SnackMachine machine;
 	
 	public int position;
 	
+	@Setter
 	private SnackPile snackPile;
 
-	public Slot() {
-		super();
-	}
-	
-	public Slot(SnackMachine machine, int position) {
+	public Slot(@NonNull SnackMachine machine, int position) {
 		super();
 		this.machine = machine;
 		this.position = position;
 		this.snackPile = SnackPile.EMPTY;
 	}
 
-	public SnackMachine getMachine() {
-		return machine;
-	}
-	
-	public int getPosition() {
-		return position;
-	}
-	
-	public SnackPile getSnackPile() {
-		return snackPile;
-	}
-	
-	public void setSnackPile(SnackPile snackPile) {
-		this.snackPile = snackPile;
-	}
-	
 }

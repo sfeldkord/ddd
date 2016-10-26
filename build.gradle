@@ -17,13 +17,15 @@ dependencies {
 	compile "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
 	compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 
-    compile 'org.apache.commons:commons-lang3:3.4'
-    
+    compile 'org.apache.commons:commons-lang3:3.+'
+
+	compileOnly "org.projectlombok:lombok:1.16.+"   
+
     testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
 
-	runtime 'com.h2database:h2:1.4.191'
+	runtime 'com.h2database:h2:1.4.+'
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.13'
+	gradleVersion = '3.1'
 }

@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import ddd.common.AbstractEntity;
+import ddd.common.Stateful;
 import ddd.example.atm.NoSuitableChangeException;
 import ddd.example.atm.NotEnoughMoneyException;
 import ddd.example.shared.Euros;
@@ -17,8 +18,10 @@ import ddd.example.shared.InvalidOperationException;
 //-buy
 //-return
 @SuppressWarnings("serial")
-public class SnackMachine extends AbstractEntity<Long> {
+public class SnackMachine extends AbstractEntity<Long> implements Stateful<SnackMachine.State> {
 
+	public static enum State { FREE, IN_TANSACTION };
+	
 	private final List<Slot> slots = Arrays.asList(new Slot(this, 1), new Slot(this, 2), new Slot(this, 3));
 	
 	private Euros moneyInside = Euros.NONE;
@@ -90,7 +93,7 @@ public class SnackMachine extends AbstractEntity<Long> {
 	}
 
 	public Euros unloadMoney() {
-		if (moneyInTransaction.compareTo(BigDecimal.ZERO) > 0) {
+		if (getState() == State.IN_TANSACTION) {
 			throw new InvalidOperationException("Snack machine is busy!");
 		}
 		Euros money = moneyInside;
@@ -104,6 +107,11 @@ public class SnackMachine extends AbstractEntity<Long> {
 
 	public BigDecimal getMoneyInTransaction() {
 		return moneyInTransaction;
+	}
+
+	@Override
+	public State getState() {
+		return moneyInTransaction.compareTo(BigDecimal.ZERO) > 0 ? State.IN_TANSACTION : State.FREE;
 	}
 	
 }
