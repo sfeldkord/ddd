@@ -86,15 +86,15 @@ public class AtmTest {
 	}
 
 	private void assertEvents() {
-		assertEquals(1, atm.getEvents().size());
-		assertEquals(BalanceChangedEvent.class, atm.getEvents().get(0).getClass());
-		BigDecimal chargedAmount = ((BalanceChangedEvent) atm.getEvents().get(0)).delta;
+		assertEquals(1, atm.getPendingEvents().size());
+		assertEquals(BalanceChangedEvent.class, atm.getPendingEvents().get(0).getClass());
+		BigDecimal chargedAmount = ((BalanceChangedEvent) atm.getPendingEvents().get(0)).delta;
 		assertEquals(0, atm.moneyCharged.compareTo(chargedAmount));
 	}
 
 	private void assertUnmodified() {
 		assertEquals(Euros.TWO_EURO, atm.moneyInside);
 		assertEquals(0, atm.moneyCharged.compareTo(BigDecimal.ZERO));
-		assertEquals(0, atm.getEvents().size());
+		assertEquals(0, atm.getPendingEvents().size());
 	}
 }

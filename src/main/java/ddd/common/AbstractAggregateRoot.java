@@ -16,7 +16,7 @@ public abstract class AbstractAggregateRoot<ID extends Serializable> extends Abs
 	
 	private int version;
 	
-	private transient final List<DomainEvent> events = new LinkedList<DomainEvent>();
+	private transient final List<DomainEvent> pendingEvents = new LinkedList<DomainEvent>();
 
 	@Override
 	public String getCreatedBy() {
@@ -43,17 +43,17 @@ public abstract class AbstractAggregateRoot<ID extends Serializable> extends Abs
 		return version;
 	}
 
-	public final List<DomainEvent> getEvents() {
-		return Collections.unmodifiableList(events);
+	public final List<DomainEvent> getPendingEvents() {
+		return Collections.unmodifiableList(pendingEvents);
 	}
 
-	//Hier wäre ein Friend gut oder der Dispatcher muss im gleichen Package liegen - wird er aber nicht wenn er nicht generisch ist
-	public final void clearEvents() {
-		events.clear();
+	//Hier waere ein Friend gut oder der Dispatcher muss im gleichen Package liegen - wird er aber nicht wenn er nicht generisch ist
+	public final void clearPendingEvents() {
+		pendingEvents.clear();
 	}
 
 	protected final void addEvent(DomainEvent event) {
-		events.add(event);
+		pendingEvents.add(event);
 	}
 
 }

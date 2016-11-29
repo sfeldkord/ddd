@@ -11,6 +11,7 @@ import ddd.common.DomainEventHandler;
 //Muss via @EntityListeners an die entität gebunden werden
 public class DomainEventListener {
 
+	//Map<DomainEventType, List<DomainEventHandler<DomainEventType>>
 	private final List<DomainEventHandler> handlers = new LinkedList<>();
 
 	private DomainEventListener() {
@@ -20,9 +21,9 @@ public class DomainEventListener {
 	@PrePersist
 	@PreUpdate
 	@PreRemove
-	void dispatchEvents(AbstractAggregateRoot<?> root) {
-		root.getEvents().forEach(event -> handlers.forEach(handler -> handler.handle(event)));
-		root.clearEvents();
+	void dispatchPendingEvents(AbstractAggregateRoot<?> root) {
+		root.getPendingEvents().forEach(event -> handlers.forEach(handler -> handler.handle(event)));
+		root.clearPendingEvents();
 	}
 
 }
