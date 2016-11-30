@@ -3,6 +3,7 @@ package cqrs;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,13 +21,14 @@ import cqrs.event.PushView;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
+//TODO ineffiziente Speicherung!
 @Slf4j
 @Service
 public class SimpleEventStoreImpl implements EventStore {
 
 	private final List<Event> eventLog = new CopyOnWriteArrayList<>();
 	
-	private final Map<PushView, Predicate<Event>> subscribers = new IdentityHashMap<>();
+	private final Map<PushView, Predicate<Event>> subscriptions = new IdentityHashMap<>();
 
 	//TODO http://docs.spring.io/spring/docs/current/spring-framework-reference/html/scheduling.html
 	//Hier wichtig: Wir sind hier auf der Read-Seite - d.h wir können mit mehreren Threads arbeiten (im Gegensatz zum CommandBus)
@@ -46,11 +48,35 @@ public class SimpleEventStoreImpl implements EventStore {
 	private void notifySubcribers(List<Event> events) {
 		executor.execute(() -> {
 			events.forEach(event ->
-				subscribers.entrySet().forEach(eventConsumer -> {
+				subscriptions.entrySet().forEach(eventConsumer -> {
 					if (eventConsumer.getValue().test(event))
 						eventConsumer.getKey().accept(event);
 				}));
 			});
+	}
+
+	@Override
+	public Stream<Event> fetchByAggregateId(@NonNull UUID aggregateId) {
+		Predicate<Event> eventFilter = event -> aggregateId.equals(event.getAggregateId());
+		return fetch(eventFilter);
+	}
+	
+	@Override
+	public Stream<Event> fetchByEventType(@NonNull Class<? extends Event> eventType) {
+		Predicate<Event> eventFilter = event -> eventType.equals(event.getClass());
+		return fetch(eventFilter);
+	}
+	
+	@Override
+	public Stream<Event> fetchByAggregateIdAndEventType(@NonNull UUID aggregateId, @NonNull Class<? extends Event> eventType) {
+		Predicate<Event> eventFilter = event -> eventType.equals(event.getClass());
+		eventFilter = eventFilter.and(event -> aggregateId.equals(event.getAggregateId()));
+		return fetch(eventFilter);
+	}
+	
+	@Override
+	public Stream<Event> fetch(@NonNull Predicate<Event> eventFilter) {
+		return fetch(eventFilter, null);
 	}
 
 	@Override
@@ -64,7 +90,7 @@ public class SimpleEventStoreImpl implements EventStore {
 	}
 	
 	//Ignoriert alle Events bis einschließlich des lastEvents
-	//TODO Richtig blöd ist, dass der Filter auf einen außerhalb liegenden Variable (seekMode) zugreift - das kann man sicher optimieren
+	//TODO Richtig blöd ist, dass der Filter auf einen außerhalb liegenden Variable found zugreift - das kann man sicher optimieren
 	private Stream<Event> dropBefore(@NonNull Stream<Event> events, @NonNull Event lastEvent) {
 		AtomicBoolean found = new AtomicBoolean(false);
 		events = events.filter(event -> !found.compareAndSet(false, event == lastEvent));//Skip until found
@@ -84,7 +110,12 @@ public class SimpleEventStoreImpl implements EventStore {
 	
 	@Override
 	public void subscribe(@NonNull PushView subscriber, @NonNull Predicate<Event> eventFilter) {
-		subscribers.put(subscriber, eventFilter);
+		subscriptions.put(subscriber, eventFilter);
+	}
+	
+	@Override
+	public void unsubscribe(@NonNull PushView subscriber) {
+		subscriptions.remove(subscriber);
 	}
 	
 }

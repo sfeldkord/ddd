@@ -1,6 +1,7 @@
 package cqrs;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -11,10 +12,17 @@ public interface EventStore {
 
 	void publish(List<Event> events);
 	
-	//FIXME: EventFilter statt Predicate<Class<? extends Event>>
+	Stream<Event> fetchByAggregateId(UUID aggregateId);
+	Stream<Event> fetchByEventType(Class<? extends Event> eventType);
+	Stream<Event> fetchByAggregateIdAndEventType(UUID aggregateId, Class<? extends Event> eventType);
+
+	Stream<Event> fetch(Predicate<Event> eventFilter);
+	
+	//TODO Brauchen wir das? Oder kann der Event-Store das nicht kapseln?
 	Stream<Event> fetch(Predicate<Event> eventFilter, Event lastEvent);
-
-	//FIXME: EventFilter statt Predicate<Class<? extends Event>>
+	
 	void subscribe(PushView pushView, Predicate<Event> eventFilter);
-
+	
+	void unsubscribe(PushView pushView);
+	
 }
