@@ -1,4 +1,6 @@
-package cqrs.common;
+package cqrs.command;
+
+import cqrs.common.Message;
 
 /**
  * Tells someone to do something. Commands can be rejected, if they are not
@@ -6,4 +8,5 @@ package cqrs.common;
  */
 public interface Command extends Message {
 	//Just a marker interface
+	//we may add a timeout and an optional expected aggregateId and version
 }

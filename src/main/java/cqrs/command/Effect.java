@@ -3,7 +3,6 @@ package cqrs.command;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import cqrs.common.Command;
 import cqrs.common.Event;
 import cqrs.common.Message;
 import lombok.NonNull;

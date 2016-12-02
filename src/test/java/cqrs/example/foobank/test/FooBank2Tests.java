@@ -13,10 +13,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import cqrs.CqrsConfig;
-import cqrs.EventStore;
 import cqrs.example.foobank.ApplicationFacade;
 import cqrs.example.foobank.FooBankConfig;
 import cqrs.example.foobank.view.ValuedCustomerReportView;
+import cqrs.store.EventStore;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = { CqrsConfig.class, FooBankConfig.class })

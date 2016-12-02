@@ -1,0 +1,87 @@
+ValueObject
+	equals(): boolean
+	hashCode(): long
+	//immutable
+	//-> only setters, no setters!
+	//-> 
+
+Entity
+	id: UUID
+
+AggregateRoot -> Entity
+	- changes: List<Event>
+	version: int
+	
+	uncommitedChanges(): List<Event>
+	commit(): void
+	loadChangesFromHistory(): void
+	# applyChange(Event): void	<- für neue Events
+	- applyChange(Event, isNew): void <- auch für loadChangesFromHistory
+	createdBy(): String/UUID
+	created(): LocalDate
+	lastModifiedBy(): String/UUID
+	lastModified(): LocalDate
+	
+
+Message
+	timeStamp: LocalDate
+	(userId: String/UUID)
+
+Command -> Message	
+	timeout (optional)
+	...
+
+Event -> Message
+	aggregateId: UUID
+	version: int		<-muss zum letzen Aggregatszustand passen, damit das Event angewendet werden kann!
+	(processId: UUID)
+
+@Service //= Injectable
+
+Repository -> Service	//Stateless?!
+	- store: EventStore / StateStore
+	store(aggregateRoot, expecteVersion): void/T extends AggregateRoot
+	fetch(id): T extends AggregateRoot
+
+Effects
+	commands: Stream<Command>
+	events: Stream<Events>
+	of(Message...): Effects
+	NONE(): Effects
+	
+CommandHandler -> Service, ApplicationContextAware, Function<Command -> Effects>
+	//commandBus.register(this)
+	apply(command): Effects//List<Message>
+	
+CommandBus -> Service
+	# eventStore: EventStore
+	- commandHandlers: List<CommandHandler>
+	#register(CommandHandler): void
+	sync post()
+	
+EventHandler -> Service, CConsumer<Event -> {}>
+	accept(event): void
+	
+View -> EventHandler
+	# eventStore: EventStore
+	# aggregateId: UUID
+	# last: Event
+	- eventConsumers: List<EventConsumer>
+	#getTypeFilter(): Predicate
+	#@EventConsumer	//Marker
+	
+PullView -> View
+	pullEvents()
+	
+PushView -> View, ApplicationContextAware
+	//eventStore.subscribe(this)
+	
+EventStore -> Service
+	- subscribers
+	- publishers
+	fetch(aggregateId, [typeFilter])
+	save(aggregateId, version, events...)
+	subscribe(pusView, aggregateId, [typeFilter])
+	publish(events...): void
+	
+	

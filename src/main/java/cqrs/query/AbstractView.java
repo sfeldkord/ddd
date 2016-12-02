@@ -1,4 +1,4 @@
-package cqrs.event;
+package cqrs.query;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -10,9 +10,8 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import cqrs.EventStore;
 import cqrs.common.Event;
-import cqrs.common.EventHandler;
+import cqrs.store.EventStore;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 

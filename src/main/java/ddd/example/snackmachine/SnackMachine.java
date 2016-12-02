@@ -20,7 +20,7 @@ import ddd.example.shared.InvalidOperationException;
 @SuppressWarnings("serial")
 public class SnackMachine extends AbstractEntity<Long> implements Stateful<SnackMachine.State> {
 
-	public static enum State { FREE, IN_TANSACTION };
+	public static enum State { FREE, IN_TANSACTION }
 	
 	private final List<Slot> slots = Arrays.asList(new Slot(this, 1), new Slot(this, 2), new Slot(this, 3));
 	

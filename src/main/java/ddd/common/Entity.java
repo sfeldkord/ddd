@@ -1,5 +1,7 @@
 package ddd.common;
 
-public interface Entity<ID> extends Identified<ID> {
+public interface Entity<ID> {
+	
+	ID getId();
 
 }

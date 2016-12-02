@@ -2,15 +2,15 @@ package cqrs.example.foobank.view;
 
 import java.util.UUID;
 
-import cqrs.EventStore;
-import cqrs.event.EventConsumer;
-import cqrs.event.PullView;
 import cqrs.example.foobank.Account;
 import cqrs.example.foobank.event.AccountCreatedEvent;
 import cqrs.example.foobank.event.DepositedEvent;
 import cqrs.example.foobank.event.TransferReceivedEvent;
 import cqrs.example.foobank.event.TransferSentEvent;
 import cqrs.example.foobank.event.WithdrawnEvent;
+import cqrs.query.EventConsumer;
+import cqrs.query.PullView;
+import cqrs.store.EventStore;
 import lombok.Getter;
 
 public class AccountView extends PullView {

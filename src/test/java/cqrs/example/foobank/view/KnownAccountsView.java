@@ -7,10 +7,10 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import cqrs.EventStore;
-import cqrs.event.EventConsumer;
-import cqrs.event.PullView;
 import cqrs.example.foobank.event.AccountCreatedEvent;
+import cqrs.query.EventConsumer;
+import cqrs.query.PullView;
+import cqrs.store.EventStore;
 
 @Component
 public class KnownAccountsView extends PullView {

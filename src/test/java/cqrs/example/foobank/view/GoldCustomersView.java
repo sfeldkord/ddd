@@ -9,12 +9,12 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import cqrs.EventStore;
-import cqrs.event.EventConsumer;
-import cqrs.event.PushView;
 import cqrs.example.foobank.Account;
 import cqrs.example.foobank.AccountRepository;
 import cqrs.example.foobank.event.TransferReceivedEvent;
+import cqrs.query.EventConsumer;
+import cqrs.query.PushView;
+import cqrs.store.EventStore;
 
 @Component
 // note this being a PushView rather than a pull-View!

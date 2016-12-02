@@ -5,5 +5,5 @@ package cqrs.common;
  */
 public interface Message {
 	//So far, just a marker interface
-	//We may add a timestamp or a userId
+	//We may add an (internal/technical) id, a timestamp or a userId
 }

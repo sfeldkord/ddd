@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @SuppressWarnings("serial")
-public abstract class AbstractAggregateRoot<ID extends Serializable> extends AbstractEntity<ID> implements AggregateRoot, Versioned, Auditable {
+public abstract class AbstractAggregateRoot<ID extends Serializable> extends AbstractEntity<ID> implements AggregateRoot, Auditable {
 
 	private String createdBy;
 	

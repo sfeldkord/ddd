@@ -1,4 +1,4 @@
-package cqrs.event;
+package cqrs.query;
 
 import java.util.UUID;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import cqrs.EventStore;
+import cqrs.store.EventStore;
 import lombok.NonNull;
 
 public abstract class PushView extends AbstractView implements ApplicationContextAware {

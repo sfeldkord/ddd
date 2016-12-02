@@ -1,4 +1,4 @@
-package cqrs;
+package cqrs.store;
 
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -17,7 +17,7 @@ import javax.annotation.PreDestroy;
 import org.springframework.stereotype.Service;
 
 import cqrs.common.Event;
-import cqrs.event.PushView;
+import cqrs.query.PushView;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 

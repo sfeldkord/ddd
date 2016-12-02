@@ -1,8 +1,8 @@
-package cqrs.event;
+package cqrs.query;
 
 import java.util.UUID;
 
-import cqrs.EventStore;
+import cqrs.store.EventStore;
 import lombok.NonNull;
 
 public abstract class PullView extends AbstractView {

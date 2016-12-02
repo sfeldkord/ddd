@@ -1,4 +1,4 @@
-package cqrs;
+package cqrs.store;
 
 import java.util.List;
 import java.util.UUID;
@@ -6,13 +6,14 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import cqrs.common.Event;
-import cqrs.event.PushView;
+import cqrs.query.PushView;
 
 public interface EventStore {
 
 	void publish(List<Event> events);
 	
-	Stream<Event> fetchByAggregateId(UUID aggregateId);
+	Stream<Event> fetchByAggregateId(UUID aggregateId);//add optional lastVersion
+	
 	Stream<Event> fetchByEventType(Class<? extends Event> eventType);
 	Stream<Event> fetchByAggregateIdAndEventType(UUID aggregateId, Class<? extends Event> eventType);
 

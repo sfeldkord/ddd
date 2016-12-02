@@ -7,7 +7,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.GenericTypeResolver;
 
-import cqrs.common.Command;
 import lombok.NonNull;
 
 public abstract class AbstractCommandHandler<C extends Command> implements Function<C, Effect>, ApplicationContextAware {
@@ -17,7 +16,7 @@ public abstract class AbstractCommandHandler<C extends Command> implements Funct
 
 	@Override
 	public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
-		applicationContext.getBean(CommandBus.class).register(getCommandType(), this);
+		applicationContext.getBean(SimpleCommandBus.class).register(getCommandType(), this);
 	}
 
 	@SuppressWarnings("unchecked")

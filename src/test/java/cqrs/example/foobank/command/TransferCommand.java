@@ -2,7 +2,7 @@ package cqrs.example.foobank.command;
 
 import java.util.UUID;
 
-import cqrs.common.Command;
+import cqrs.command.Command;
 import lombok.Value;
 
 @Value

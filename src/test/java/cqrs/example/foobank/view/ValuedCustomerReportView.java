@@ -6,10 +6,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import cqrs.EventStore;
-import cqrs.event.EventConsumer;
-import cqrs.event.PullView;
 import cqrs.example.foobank.event.DepositedEvent;
+import cqrs.query.EventConsumer;
+import cqrs.query.PullView;
+import cqrs.store.EventStore;
 
 public class ValuedCustomerReportView extends PullView {
 
