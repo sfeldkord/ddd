@@ -12,7 +12,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import cqrs.CqrsConfig;
+import cqrs.configuration.CqrsConfig;
 import cqrs.example.foobank.ApplicationFacade;
 import cqrs.example.foobank.FooBankConfig;
 import cqrs.example.foobank.view.ValuedCustomerReportView;

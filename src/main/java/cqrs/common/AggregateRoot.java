@@ -8,7 +8,7 @@ public interface AggregateRoot {
 	UUID getAggregateId();
 	int getVersion();
 	
-	Stream<Event> getPendingEvents();
+	Stream<Event> getPendingEvents();//sollte nicht in den contract
 	//post, clear Events
 	
 }

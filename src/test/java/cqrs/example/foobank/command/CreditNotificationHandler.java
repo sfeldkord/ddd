@@ -1,6 +1,5 @@
 package cqrs.example.foobank.command;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cqrs.command.AbstractCommandHandler;
@@ -9,7 +8,7 @@ import cqrs.example.foobank.service.CreditNotificationService;
 import lombok.RequiredArgsConstructor;
 
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class CreditNotificationHandler extends AbstractCommandHandler<CreditNotificationCommand> {
 
     final CreditNotificationService s;

@@ -2,7 +2,6 @@ package cqrs.example.foobank;
 
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cqrs.command.CommandBus;
@@ -15,7 +14,7 @@ import cqrs.example.foobank.command.WithdrawCommand;
 import lombok.RequiredArgsConstructor;
 
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class ApplicationFacade {
 
     final CommandBus bus;

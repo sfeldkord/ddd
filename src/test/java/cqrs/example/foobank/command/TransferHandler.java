@@ -2,7 +2,6 @@ package cqrs.example.foobank.command;
 
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cqrs.command.AbstractCommandHandler;
@@ -14,7 +13,7 @@ import cqrs.example.foobank.view.KnownAccountsView;
 import lombok.RequiredArgsConstructor;
 
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class TransferHandler extends AbstractCommandHandler<TransferCommand> {
 
     final AccountRepository repo;

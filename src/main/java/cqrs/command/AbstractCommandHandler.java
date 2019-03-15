@@ -16,7 +16,7 @@ public abstract class AbstractCommandHandler<C extends Command> implements Funct
 
 	@Override
 	public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
-		applicationContext.getBean(SimpleCommandBus.class).register(getCommandType(), this);
+		applicationContext.getBean(SimpleInMememoryCommandBus.class).register(getCommandType(), this);
 	}
 
 	@SuppressWarnings("unchecked")

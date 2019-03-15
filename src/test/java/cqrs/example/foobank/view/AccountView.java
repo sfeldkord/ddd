@@ -24,27 +24,27 @@ public class AccountView extends PullView {
     }
 
     @EventConsumer
-    public void handle(AccountCreatedEvent evt) {
+    public void on(AccountCreatedEvent evt) {
         this.account = new Account(evt.getAggregateId(), evt.getFirstName(), evt.getLastName(), 0);
     }
 
     @EventConsumer
-    public void handle(DepositedEvent evt) {
+    public void on(DepositedEvent evt) {
         this.account.credit(evt.getAmount());
     }
 
     @EventConsumer
-    public void handle(WithdrawnEvent evt) {
+    public void on(WithdrawnEvent evt) {
         this.account.debit(evt.getAmount());
     }
 
     @EventConsumer
-    public void handle(TransferReceivedEvent evt) {
+    public void on(TransferReceivedEvent evt) {
         this.account.credit(evt.getAmount());
     }
 
     @EventConsumer
-    public void handle(TransferSentEvent evt) {
+    public void on(TransferSentEvent evt) {
         this.account.debit(evt.getAmount());
     }
 

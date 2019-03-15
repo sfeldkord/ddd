@@ -7,6 +7,11 @@ import cqrs.common.Event;
 import cqrs.common.Message;
 import lombok.NonNull;
 
+/**
+ * An effect is the result of a command execution that gets published. This can
+ * be one or more events or commands. A special case is a command that has no
+ * effect.
+ */
 public class Effect {
 
 	private final Message[] messages;

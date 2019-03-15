@@ -15,15 +15,14 @@ import cqrs.store.EventStore;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
+//TODO rename EventHandler?
 /** Abstract base class for all Views. */
 @Slf4j
-public abstract class AbstractView implements EventHandler {
+public abstract class AbstractView implements Consumer<Event> {
 
-	//TODO inject?
     protected final EventStore eventStore;
 
     protected UUID aggregateId = null;
-
     
 	protected final Map<Class<?>, Consumer<Event>> eventConsumers = new HashMap<>();
 

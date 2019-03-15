@@ -19,4 +19,6 @@ public interface Event extends Message {
 	
 	//timestamp
 	
+	//TODO stored event, dass zusätzlich das event mit typ und payload in eine db serialisieren und deserialisieren kann 
+	
 }
